@@ -7,9 +7,10 @@
  *******************************************************************************/
 
 #include <iostream>
-#include <time.h>
 #include "Boggle.hpp"
 #include "Boggle.cpp"
+#include "Timer.hpp"
+#include "Timer.cpp"
 using namespace std;
 
 int main(){
@@ -29,7 +30,7 @@ int main(){
     "be more than 3 letters in length." << endl;
 
     // choose rows and cols
-        cout << "How many rows of letters would you like? Please enter an integer value greater than 3 and less than 100." << endl;
+    cout << "How many rows of letters would you like? Please enter an integer value greater than 3 and less than 100." << endl;
     cin >> rows;
     while(rows > 100 || rows < 4){
         cin.fail();
@@ -46,12 +47,17 @@ int main(){
         cin >> cols;
     }
 
+    cout << "Starting timer..." << endl;
+    Timer timer;
+
     // set up and print board
     Boggle bboard(rows, cols);
     bboard.printBoard();
 
     // while the game is going, accept a guessWord
     while(gamePlay){
+        timer.remainingTime();
+
         cout << "Enter a row number for the first letter or enter -1 to exit." << endl;
         cin >> x;
         if(x == -1){
