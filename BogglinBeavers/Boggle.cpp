@@ -444,13 +444,17 @@ bool Boggle::findWord(int x, int y, string word){
         return false;
     }
     // if word is in dictionary and word is on board, then true
-    if(isWord(word) && isValid(x, y, word)){
+    if(isWord(word) && isValid(x, y, word) && checkWord(word)){
         resetUsed();
         score = score + n * 10;
         wordCount++;
         cout << "Congratulations, you've found a word!" << endl;
         cout << "Your score is " << getScore() << endl;
         return true;
+    }
+    else if(!checkWord(word)){
+        cout << "You have used that word already!" << endl;
+        return false;
     }
     else if(!isWord(word)){
         cout << "Sorry, you did not find a word." << endl;
@@ -462,4 +466,22 @@ bool Boggle::findWord(int x, int y, string word){
     }
     else
         return false;
+}
+
+bool Boggle::checkWord(string word){
+    int n = usedWords.size();
+    bool wordFound = false;
+
+    for(int i = 0; i < n; i++){
+        if(usedWords[i] == word){
+            wordFound = true;
+        }
+    }
+    if(wordFound == true){
+        return false;
+    }
+    else{
+        usedWords.push_back(word);
+        return true;
+    }
 }
