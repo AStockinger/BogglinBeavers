@@ -9,6 +9,10 @@
 #include <iostream>
 #include <time.h>
 #include "Boggle.hpp"
+#include "Boggle.cpp"
+#include "TrieNode.cpp"
+#include "TrieNode.hpp"
+
 using namespace std;
 
 int main(){
