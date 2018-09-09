@@ -1,3 +1,9 @@
+/*******************************************************************************
+ ** Project:      Bogglin' Beavers
+ ** Date:         9 Sept 2018
+ ** Description:  Boggle class implementation file
+ *******************************************************************************/
+
 #include "Boggle.hpp"
 #include <iostream>
 #include <string>
@@ -13,48 +19,67 @@ using namespace std;
 Boggle::Boggle(){
     numRows = 4;
     numCols = 4;
-    int r;
     wordCount = 0;
     score = 0;
-
+    // random seed
     srand(time(NULL));
+	
     for(int i = 0; i < numRows; i++){
         vector<char> row;
         for(int j = 0; j < numCols; j++){
-            r = rand() % 26;
-            c = 'A' + r;
-            row.push_back(c);
+            row.push_back(randomChar(rand() % 100));
         }
         board.push_back(row);
     }
-    resetUsed();
 }
 
 // constructor takes int arguments for board size
 Boggle::Boggle(int rows, int columns){
     numRows = rows;
     numCols = columns;
-    int r;
     wordCount = 0;
     score = 0;
-
     // random seed
     srand(time(NULL));
-        for(int i = 0; i < numRows; i++){
-            vector<char> row;
-            for(int j = 0; j < numCols; j++){
-                r = rand() % 26;
-                c = 'A' + r;
-                row.push_back(c);
+	
+    for(int i = 0; i < numRows; i++){
+        vector<char> row;
+        for(int j = 0; j < numCols; j++){
+            row.push_back(randomChar(rand() % 100));
             }
             board.push_back(row);
         }
+}
 
-    resetUsed();
+char Boggle::randomChar(int val){
+    int random;
+	
+    // chars based on desired distribution
+    char rare[] = {'J', 'Q', 'X', 'Z'};
+    char uncommon[] = {'B', 'D', 'F', 'G', 'K', 'V', 'W'};
+    char common[] = {'C', 'H', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'Y'};
+    char vowel[] = {'A', 'E', 'I', 'O', 'U'};
+
+    // input val should be rand() % 100 for desired results
+    if(val < 5){
+        random = rand() % 4;
+        return rare[random];
+    }
+    else if(val < 30){
+        random = rand() % 7;
+        return uncommon[random];
+    }
+    else if(val < 65){
+        random = rand() % 10;
+        return common[random];
+    }
+    else{  
+        random = rand() % 5;
+        return vowel[random];
+    }
 }
 
 void Boggle::printBoard(){
-
     // column labels
     cout << "  ";
     for(int i = 0; i < numCols; i++){
@@ -68,11 +93,11 @@ void Boggle::printBoard(){
         for(unsigned int j = 0; j < numCols; j++){
            cout << board[i][j];
            	if (board[i][j] == 'Q'){
-			    cout << "u ";
-			}
-            else{
-				std::cout << "  ";
-			}
+			cout << "u ";
+		}
+            	else{
+			cout << "  ";
+		}
        }
        cout << endl;
    }
@@ -88,19 +113,23 @@ int Boggle::getWordCount(){
 
 // check string to dictionary text file
 bool Boggle::isWord(string word){
-    int offset; 
     string line;
     ifstream Myfile;
+    bool found = false;
     Myfile.open("dictionary.txt");
 
     if(Myfile.is_open()){
-        while(!Myfile.eof()){
-            getline(Myfile, line);
+        while(getline(Myfile, line) && !found){
             if((line.find(word)) != string::npos){
-                return true;
+                found = true;
             }
         }
-        Myfile.close();
+        if(found){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     else
         return false;
@@ -414,6 +443,7 @@ bool Boggle::findWord(int x, int y, string word){
         cout << "Input word is not long enough." << endl;
         return false;
     }
+    // if word is in dictionary and word is on board, then true
     if(isWord(word) && isValid(x, y, word)){
         resetUsed();
         score = score + n * 10;
@@ -430,4 +460,6 @@ bool Boggle::findWord(int x, int y, string word){
         cout << "Sorry, that combination of letters does not match the board." << endl;
         return false;
     }
+    else
+        return false;
 }
