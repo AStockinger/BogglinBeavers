@@ -55,7 +55,7 @@ int main(){
     bboard.printBoard();
 
     // while the game is going, accept a guessWord
-    while(gamePlay){
+    while(timer.checkTime() && gamePlay){
         timer.remainingTime();
 
         cout << "Enter a row number for the first letter or enter -1 to exit." << endl;
@@ -80,8 +80,13 @@ int main(){
         }
         cout << "Now enter the word, in all CAPS." << endl;
         cin >> guess;
-
-            bboard.findWord(x, y, guess);
+            if (timer.checkTime()){
+                bboard.findWord(x, y, guess);
+            }
+            else{
+                cout << "Time has elapsed" << endl;
+                gamePlay = false;
+            }     
     }
 
     while(gamePlay == false){
