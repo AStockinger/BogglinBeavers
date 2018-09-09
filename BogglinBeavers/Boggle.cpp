@@ -5,6 +5,7 @@
  *******************************************************************************/
 
 #include "Boggle.hpp"
+#include "TrieNode.hpp"
 #include <iostream>
 #include <string>
 #include <stdio.h>
@@ -17,6 +18,7 @@ using namespace std;
 
 // default constructor is 4x4 board
 Boggle::Boggle(){
+	dict = createTrieFromDict();
     numRows = 4;
     numCols = 4;
     wordCount = 0;
@@ -35,6 +37,7 @@ Boggle::Boggle(){
 
 // constructor takes int arguments for board size
 Boggle::Boggle(int rows, int columns){
+	dict = createTrieFromDict();
     numRows = rows;
     numCols = columns;
     wordCount = 0;
@@ -113,26 +116,17 @@ int Boggle::getWordCount(){
 
 // check string to dictionary text file
 bool Boggle::isWord(string word){
-    string line;
-    ifstream Myfile;
-    bool found = false;
-    Myfile.open("dictionary.txt");
+	TrieNode* currLetterNode = dict;
 
-    if(Myfile.is_open()){
-        while(getline(Myfile, line) && !found){
-            if((line.find(word)) != string::npos){
-                found = true;
-            }
-        }
-        if(found){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    else
-        return false;
+	for (int i = 0; i < word.size(); i++) {
+		currLetterNode = currLetterNode->getNextLetter(word[i]);
+
+		if (!currLetterNode) {
+			return false;
+		}
+	}
+
+	return currLetterNode->isWord();
 }
 
 void Boggle::resetUsed(){
@@ -484,4 +478,29 @@ bool Boggle::checkWord(string word){
         usedWords.push_back(word);
         return true;
     }
+}
+
+TrieNode* Boggle::createTrieFromDict() {
+	string word;
+	ifstream dictFile;
+	dictFile.open("dictionary.txt");
+	TrieNode* trieDict = new TrieNode();
+
+	if (dictFile.is_open()) {
+		while (getline(dictFile, word)) {
+			int wordLen = word.size();
+
+			// add each letter of word to trie
+			if (wordLen >= MIN_WORD_LEN) {
+				TrieNode* currNode = trieDict;
+				for (int i = 0; i < wordLen; i++) {
+					currNode = currNode->addNextLetter(word[i]);
+				}
+				// set the last letter as a word end
+				currNode->setWordEnd(true);
+			}
+		}
+		return trieDict;
+	}
+	return nullptr;
 }

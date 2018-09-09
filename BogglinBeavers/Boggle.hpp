@@ -7,12 +7,17 @@
 #ifndef BOGGLE_HPP
 #define BOGGLE_HPP
 
+#include "TrieNode.hpp"
 #include <vector>
 #include <string>
 using namespace std;
 
 class Boggle{
     private:
+		// min length that a word can be
+		const int MIN_WORD_LEN = 4;
+		// dictionary of all valid words
+		TrieNode* dict;
         // number of rows and cols in the board
         int numRows, numCols;
         // vector game board
@@ -23,6 +28,8 @@ class Boggle{
         bool used;
         // stores inputted words
         vector<string> usedWords;
+		// create a trie from the dictionary
+		TrieNode* createTrieFromDict();
     public:
         // constructors
         Boggle();
