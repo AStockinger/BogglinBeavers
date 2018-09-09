@@ -9,7 +9,6 @@
 #include <iostream>
 #include <time.h>
 #include "Boggle.hpp"
-#include "Boggle.cpp"
 using namespace std;
 
 int main(){
