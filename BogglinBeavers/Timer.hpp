@@ -11,10 +11,18 @@ class Timer{
         bool resetted;
     public:
         Timer();
+<<<<<<< HEAD
         bool isStarted();
         void startClock();
         void stopClock();
         void reset();
         unsigned long getTime();
+=======
+        double getTime();
+        void remainingTime();
+        bool checkTime();
+
+
+>>>>>>> ...
 };
 #endif
