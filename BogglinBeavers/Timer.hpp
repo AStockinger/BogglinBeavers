@@ -11,6 +11,7 @@ class Timer{
         Timer();
         double getTime();
         void remainingTime();
+        bool checkTime();
 
 
 };
