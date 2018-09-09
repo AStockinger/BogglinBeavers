@@ -7,6 +7,7 @@
 #include "Boggle.hpp"
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -149,7 +150,7 @@ void Boggle::resetUsed(){
 bool Boggle::isValid(int x, int y, string word){
     // copy string into array for checking
     int n = word.length();
-    char arr[n];
+    char* arr = new char[n];
     strcpy(arr, word.c_str());
 
     int i = 0;
@@ -432,6 +433,8 @@ bool Boggle::isValid(int x, int y, string word){
         }
     }
     return true;
+
+    delete arr;
 }
 
 bool Boggle::findWord(int x, int y, string word){
