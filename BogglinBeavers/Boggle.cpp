@@ -140,292 +140,290 @@ void Boggle::resetUsed(){
 }
 
 // check bounds and if letter is used
-bool Boggle::isValid(int x, int y, string word){
-    // copy string into array for checking
-    int n = word.length();
-    char arr[n];
-    strcpy(arr, word.c_str());
+bool Boggle::isValid(int x, int y, string word) {
+	// copy string into array for checking
+	int n = word.length();
 
-    int i = 0;
-    int row = x;
-    int col = y - 1;
- 
-    while(board[row][col] == arr[i] && i < n){
-        // play not on edge of board
-        if(row != 0 && row != numRows - 1 && col != 0 && col != numCols - 1){
-            i++;
-            if(board[--row][col] == arr[i] && board[--row][col] != used){
-                board[row][col] = used;
-                row--;
-                continue;
-            }
-            else if(board[--row][--col] == arr[i] && board[--row][--col] != used){
-                board[row][col] = used;
-                row--;
-                col--;
-                continue;
-            }
-            else if(board[--row][++col] == arr[i] && board[--row][++col] != used){
-                board[row][col] = used;
-                row--;
-                col++;
-                continue;
-            }
-            else if(board[row][++col] == arr[i] && board[row][++col] != used){
-                board[row][col] = used;
-                col++;
-                continue;
-            }
-            else if(board[++row][++col] == arr[i] && board[++row][++col] != used){
-                board[row][col] = used;
-                row++;
-                col++;
-                continue;
-            }
-            else if(board[++row][col] == arr[i] && board[++row][col] != used){
-                board[row][col] = used;
-                row++;
-                continue;
-            }
-            else if(board[++row][--col] == arr[i] && board[++row][--col] != used){
-                board[row][col] = used;
-                row++;
-                col--;
-                continue;
-            }
-            else if(board[row][--col] == arr[i] && board[row][--col] != used){
-                board[row][col] = used;
-                col--;
-                continue;
-            }
-            else
-                return false;
-        }
-        // play is in row 0 and not a corner
-        else if(row == 0 && col != 0 && col != (numCols - 1)){
-            i++;
-            if(board[row][++col] == arr[i] && board[row][++col] != used){
-                board[row][col] = used;
-                col++;
-                continue;
-            }
-            else if(board[++row][++col] == arr[i] && board[++row][++col] != used){
-                board[row][col] = used;
-                row++;
-                col++;
-                continue;
-            }
-            else if(board[++row][col] == arr[i] && board[++row][col] != used){
-                board[row][col] = used;
-                row++;
-                continue;
-            }
-            else if(board[++row][--col] == arr[i] && board[++row][--col] != used){
-                board[row][col] = used;
-                row++;
-                col--;
-                continue;
-            }
-            else if(board[row][--col] == arr[i] && board[row][--col] != used){
-                board[row][col] = used;
-                col--;
-                continue;
-            }
-            else
-                return false;
-        }
-        // play is in col 0 and not a corner
-        else if(row != 0 && row != (numRows - 1) && col == 0){
-            i++;
-            if(board[--row][col] == arr[i] && board[--row][col] != used){
-                board[row][col] = used;
-                row--;
-                continue;
-            }
-            else if(board[--row][++col] == arr[i] && board[--row][++col] != used){
-                board[row][col] = used;
-                row--;
-                col++;
-                continue;
-            }
-            else if(board[row][++col] == arr[i] && board[row][++col] != used){
-                board[row][col] = used;
-                col++;
-                continue;
-            }
-            else if(board[++row][++col] == arr[i] && board[++row][++col] != used){
-                board[row][col] = used;
-                row++;
-                col++;
-                continue;
-            }
-            else if(board[++row][col] == arr[i] && board[++row][col] != used){
-                board[row][col] = used;
-                row++;
-                continue;
-            }
-            else
-                return false;
-        }
-        // play is in last row and not a corner
-        else if(row == (numRows - 1) && col != 0 && col != (numCols - 1)){
-            i++;
-            if(board[--row][col] == arr[i] && board[--row][col] != used){
-                board[row][col] = used;
-                row--;
-                continue;
-            }
-            else if(board[--row][--col] == arr[i] && board[--row][--col] != used){
-                board[row][col] = used;
-                row--;
-                col--;
-                continue;
-            }
-            else if(board[--row][++col] == arr[i] && board[--row][++col] != used){
-                board[row][col] = used;
-                row--;
-                col++;
-                continue;
-            }
-            else if(board[row][++col] == arr[i] && board[row][++col] != used){
-                board[row][col] = used;
-                col++;
-                continue;
-            }
-            else if(board[row][--col] == arr[i] && board[row][--col] != used){
-                board[row][col] = used;
-                col--;
-                continue;
-            }
-            else
-                return false;
-        }
-        // play is in last col and not a corner
-        else if(row != 0 && row != (numRows - 1) && col == (numCols - 1)){
-            i++;
-            if(board[--row][col] == arr[i] && board[--row][col] != used){
-                board[row][col] = used;
-                row--;
-                continue;
-            }
-            else if(board[--row][--col] == arr[i] && board[--row][--col] != used){
-                board[row][col] = used;
-                row--;
-                col--;
-                continue;
-            }
-            else if(board[++row][col] == arr[i] && board[++row][col] != used){
-                board[row][col] = used;
-                row++;
-                continue;
-            }
-            else if(board[++row][--col] == arr[i] && board[++row][--col] != used){
-                board[row][col] = used;
-                row++;
-                col--;
-                continue;
-            }
-            else if(board[row][--col] == arr[i] && board[row][--col] != used){
-                board[row][col] = used;
-                col--;
-                continue;
-            }
-            else
-                return false;
-        }
-        // while a play is in the top left corner
-        else if(row == 0 && col == 0){
-            i++;
-            if(board[row][++col] == arr[i] && board[row][++col] != used){
-                board[row][col] = used;
-                col++;
-                continue;
-            }
-            else if(board[++row][++col] == arr[i] && board[++row][++col] != used){
-                board[row][col] = used;
-                row++;
-                col++;
-                continue;
-            }
-            else if(board[++row][col] == arr[i] && board[++row][col] != used){
-                board[row][col] = used;
-                row++;
-                continue;
-            }
-            else
-                return false;
-        }
-        // while play is in the top right corner
-        else if(row == 0 && col == (numCols - 1)){
-            i++;
-            if(board[++row][col] == arr[i] && board[++row][col] != used){
-                board[row][col] = used;
-                row++;
-                continue;
-            }
-            else if(board[++row][--col] == arr[i] && board[++row][--col] != used){
-                board[x][y] = used;
-                row++;
-                col--;
-                continue;
-            }
-            else if(board[row][--col] == arr[i] && board[row][--col] != used){
-                board[row][col] = used;
-                col--;
-                continue;
-            }
-            else
-                return false;
-        }
-        // while play is in the bottom left corner
-        else if(row == (numRows - 1) && col == 0){
-            i++;
-            if(board[--row][col] == arr[i] && board[--row][col] != used){
-                board[row][col] = used;
-                row--;
-                continue;
-            }
-            else if(board[--row][++col] == arr[i] && board[--row][++col] != used){
-                board[row][col] = used;
-                row--;
-                col++;
-                continue;
-            }
-            else if(board[row][++col] == arr[i] && board[row][++col] != used){
-                board[row][col] = used;
-                col++;
-                continue;
-            }
-            else
-                return false;
-        }
-        // while a play is in the bottom right corner
-        else if(row == (numRows - 1) && col == (numCols - 1)){
-            i++;
-            if(board[--row][col] == arr[i] && board[--row][col] != used){
-                board[row][col] = used;
-                row--;
-                continue;
-            }
-            else if(board[--row][--col] == arr[i] && board[--row][--col] != used){
-                board[x][y] = used;
-                row--;
-                col--;
-                continue;
-            }
-            else if(board[row][--col] == arr[i] && board[row][--col] != used){
-                board[row][col] = used;
-                col--;
-                continue;
-            }
-            else
-                return false;
-        }
-        else if(row >= numRows || row < 0 || col >= numCols || col < 0){
-            return false;
-        }
-    }
-    return true;
+	int i = 0;
+	int row = x;
+	int col = y - 1;
+
+	while (board[row][col] == word[i] && i < n) {
+		// play not on edge of board
+		if (row != 0 && row != numRows - 1 && col != 0 && col != numCols - 1) {
+			i++;
+			if (board[--row][col] == word[i] && board[--row][col] != used) {
+				board[row][col] = used;
+				row--;
+				continue;
+			}
+			else if (board[--row][--col] == word[i] && board[--row][--col] != used) {
+				board[row][col] = used;
+				row--;
+				col--;
+				continue;
+			}
+			else if (board[--row][++col] == word[i] && board[--row][++col] != used) {
+				board[row][col] = used;
+				row--;
+				col++;
+				continue;
+			}
+			else if (board[row][++col] == word[i] && board[row][++col] != used) {
+				board[row][col] = used;
+				col++;
+				continue;
+			}
+			else if (board[++row][++col] == word[i] && board[++row][++col] != used) {
+				board[row][col] = used;
+				row++;
+				col++;
+				continue;
+			}
+			else if (board[++row][col] == word[i] && board[++row][col] != used) {
+				board[row][col] = used;
+				row++;
+				continue;
+			}
+			else if (board[++row][--col] == word[i] && board[++row][--col] != used) {
+				board[row][col] = used;
+				row++;
+				col--;
+				continue;
+			}
+			else if (board[row][--col] == word[i] && board[row][--col] != used) {
+				board[row][col] = used;
+				col--;
+				continue;
+			}
+			else
+				return false;
+		}
+		// play is in row 0 and not a corner
+		else if (row == 0 && col != 0 && col != (numCols - 1)) {
+			i++;
+			if (board[row][++col] == word[i] && board[row][++col] != used) {
+				board[row][col] = used;
+				col++;
+				continue;
+			}
+			else if (board[++row][++col] == word[i] && board[++row][++col] != used) {
+				board[row][col] = used;
+				row++;
+				col++;
+				continue;
+			}
+			else if (board[++row][col] == word[i] && board[++row][col] != used) {
+				board[row][col] = used;
+				row++;
+				continue;
+			}
+			else if (board[++row][--col] == word[i] && board[++row][--col] != used) {
+				board[row][col] = used;
+				row++;
+				col--;
+				continue;
+			}
+			else if (board[row][--col] == word[i] && board[row][--col] != used) {
+				board[row][col] = used;
+				col--;
+				continue;
+			}
+			else
+				return false;
+		}
+		// play is in col 0 and not a corner
+		else if (row != 0 && row != (numRows - 1) && col == 0) {
+			i++;
+			if (board[--row][col] == word[i] && board[--row][col] != used) {
+				board[row][col] = used;
+				row--;
+				continue;
+			}
+			else if (board[--row][++col] == word[i] && board[--row][++col] != used) {
+				board[row][col] = used;
+				row--;
+				col++;
+				continue;
+			}
+			else if (board[row][++col] == word[i] && board[row][++col] != used) {
+				board[row][col] = used;
+				col++;
+				continue;
+			}
+			else if (board[++row][++col] == word[i] && board[++row][++col] != used) {
+				board[row][col] = used;
+				row++;
+				col++;
+				continue;
+			}
+			else if (board[++row][col] == word[i] && board[++row][col] != used) {
+				board[row][col] = used;
+				row++;
+				continue;
+			}
+			else
+				return false;
+		}
+		// play is in last row and not a corner
+		else if (row == (numRows - 1) && col != 0 && col != (numCols - 1)) {
+			i++;
+			if (board[--row][col] == word[i] && board[--row][col] != used) {
+				board[row][col] = used;
+				row--;
+				continue;
+			}
+			else if (board[--row][--col] == word[i] && board[--row][--col] != used) {
+				board[row][col] = used;
+				row--;
+				col--;
+				continue;
+			}
+			else if (board[--row][++col] == word[i] && board[--row][++col] != used) {
+				board[row][col] = used;
+				row--;
+				col++;
+				continue;
+			}
+			else if (board[row][++col] == word[i] && board[row][++col] != used) {
+				board[row][col] = used;
+				col++;
+				continue;
+			}
+			else if (board[row][--col] == word[i] && board[row][--col] != used) {
+				board[row][col] = used;
+				col--;
+				continue;
+			}
+			else
+				return false;
+		}
+		// play is in last col and not a corner
+		else if (row != 0 && row != (numRows - 1) && col == (numCols - 1)) {
+			i++;
+			if (board[--row][col] == word[i] && board[--row][col] != used) {
+				board[row][col] = used;
+				row--;
+				continue;
+			}
+			else if (board[--row][--col] == word[i] && board[--row][--col] != used) {
+				board[row][col] = used;
+				row--;
+				col--;
+				continue;
+			}
+			else if (board[++row][col] == word[i] && board[++row][col] != used) {
+				board[row][col] = used;
+				row++;
+				continue;
+			}
+			else if (board[++row][--col] == word[i] && board[++row][--col] != used) {
+				board[row][col] = used;
+				row++;
+				col--;
+				continue;
+			}
+			else if (board[row][--col] == word[i] && board[row][--col] != used) {
+				board[row][col] = used;
+				col--;
+				continue;
+			}
+			else
+				return false;
+		}
+		// while a play is in the top left corner
+		else if (row == 0 && col == 0) {
+			i++;
+			if (board[row][++col] == word[i] && board[row][++col] != used) {
+				board[row][col] = used;
+				col++;
+				continue;
+			}
+			else if (board[++row][++col] == word[i] && board[++row][++col] != used) {
+				board[row][col] = used;
+				row++;
+				col++;
+				continue;
+			}
+			else if (board[++row][col] == word[i] && board[++row][col] != used) {
+				board[row][col] = used;
+				row++;
+				continue;
+			}
+			else
+				return false;
+		}
+		// while play is in the top right corner
+		else if (row == 0 && col == (numCols - 1)) {
+			i++;
+			if (board[++row][col] == word[i] && board[++row][col] != used) {
+				board[row][col] = used;
+				row++;
+				continue;
+			}
+			else if (board[++row][--col] == word[i] && board[++row][--col] != used) {
+				board[x][y] = used;
+				row++;
+				col--;
+				continue;
+			}
+			else if (board[row][--col] == word[i] && board[row][--col] != used) {
+				board[row][col] = used;
+				col--;
+				continue;
+			}
+			else
+				return false;
+		}
+		// while play is in the bottom left corner
+		else if (row == (numRows - 1) && col == 0) {
+			i++;
+			if (board[--row][col] == word[i] && board[--row][col] != used) {
+				board[row][col] = used;
+				row--;
+				continue;
+			}
+			else if (board[--row][++col] == word[i] && board[--row][++col] != used) {
+				board[row][col] = used;
+				row--;
+				col++;
+				continue;
+			}
+			else if (board[row][++col] == word[i] && board[row][++col] != used) {
+				board[row][col] = used;
+				col++;
+				continue;
+			}
+			else
+				return false;
+		}
+		// while a play is in the bottom right corner
+		else if (row == (numRows - 1) && col == (numCols - 1)) {
+			i++;
+			if (board[--row][col] == word[i] && board[--row][col] != used) {
+				board[row][col] = used;
+				row--;
+				continue;
+			}
+			else if (board[--row][--col] == word[i] && board[--row][--col] != used) {
+				board[x][y] = used;
+				row--;
+				col--;
+				continue;
+			}
+			else if (board[row][--col] == word[i] && board[row][--col] != used) {
+				board[row][col] = used;
+				col--;
+				continue;
+			}
+			else
+				return false;
+		}
+		else if (row >= numRows || row < 0 || col >= numCols || col < 0) {
+			return false;
+		}
+	}
+	return true;
 }
 
 bool Boggle::findWord(int x, int y, string word){
