@@ -1,3 +1,11 @@
+/*******************************************************************************
+ ** Project:      Bogglin' Beavers
+ ** Date:         9 Sept 2018
+ ** Description:  BoggleMenu is where the user interacts with the program by
+ **               setting the board and inputting words
+ **               input validation included
+ *******************************************************************************/
+
 #include <iostream>
 #include <time.h>
 #include "Boggle.hpp"
@@ -18,7 +26,7 @@ int main(){
     "You must find words by picking a starting letter and then choosing a second letter from the " <<
     "letters directly surrounding that initial letter. " << endl;
     cout << "Some additional rules are that you may not use the same exact letter twice, and each word must " <<
-    "be more than letters in length." << endl;
+    "be more than 3 letters in length." << endl;
 
     // choose rows and cols
         cout << "How many rows of letters would you like? Please enter an integer value greater than 3 and less than 100." << endl;
