@@ -21,6 +21,8 @@ class Boggle{
         int score, wordCount;
         // marks a char as used
         bool used;
+        // stores inputted words
+        vector<string> usedWords;
     public:
         // constructors
         Boggle();
@@ -39,5 +41,7 @@ class Boggle{
         bool isValid(int, int, string);
         // compbine isWord and isValid to keep score/count
         bool findWord(int, int, string);
+        // keeps track of user inputs
+        bool checkWord(string);
 };
 #endif
