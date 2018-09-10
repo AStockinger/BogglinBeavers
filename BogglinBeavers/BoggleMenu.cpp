@@ -10,8 +10,10 @@
 #include <time.h>
 #include "Boggle.hpp"
 #include "Boggle.cpp"
-#include "TrieNode.cpp"
+#include "Timer.hpp"
+#include "Timer.cpp"
 #include "TrieNode.hpp"
+#include "TrieNode.cpp"
 
 using namespace std;
 
@@ -49,12 +51,16 @@ int main(){
         cin >> cols;
     }
 
+    cout << "Starting timer..." << endl;
+    Timer timer;
+
     // set up and print board
     Boggle bboard(rows, cols);
     bboard.printBoard();
 
     // while the game is going, accept a guessWord
-    while(gamePlay){
+    while(gamePlay && timer.checkTime()){
+        timer.remainingTime();
         cout << "Enter a row number for the first letter or enter -1 to exit." << endl;
         cin >> x;
         if(x == -1){
@@ -67,7 +73,7 @@ int main(){
             cout << "Please enter a valid row number." << endl;
             cin >> x;
         }
-        cout << " Now enter a column number for the first letter." << endl;
+        cout << "Now enter a column number for the first letter." << endl;
         cin >> y;
         while(y < 0 || y > cols - 1){
             cin.fail();
@@ -77,13 +83,21 @@ int main(){
         }
         cout << "Now enter the word, in all CAPS." << endl;
         cin >> guess;
-
-            bboard.findWord(x, y, guess);
+            if (timer.checkTime()){
+                bboard.findWord(x, y, guess);
+            }
+            else{
+                cout << "Time has elapsed." << endl;
+                gamePlay = false;               
+            }
+            
     }
 
     while(gamePlay == false){
         cout << "Game Over! You found " << bboard.getWordCount() << " words!" << endl;
         cout << "Your final score is " << bboard.getScore() << endl;
+        cin.ignore();
+        cin.get();
         return 0;
         exit(0);
     }

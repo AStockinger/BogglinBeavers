@@ -1,28 +1,26 @@
+/*******************************************************************************
+ ** Project:      Bogglin' Beavers
+ ** Date:         9 Sept 2018
+ ** Description:  Specification file for Boggle class
+ *******************************************************************************/
+
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <time.h>
+#include <ctime>
 
 class Timer{
     private:
-        unsigned long start;
-        unsigned long end;
-        bool started;
-        bool resetted;
+        int timeLimit;
+        std::clock_t start;
+
     public:
         Timer();
-<<<<<<< HEAD
-        bool isStarted();
-        void startClock();
-        void stopClock();
-        void reset();
-        unsigned long getTime();
-=======
+        Timer(int timeLimit);
         double getTime();
         void remainingTime();
         bool checkTime();
 
 
->>>>>>> ...
 };
 #endif
