@@ -8,7 +8,7 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-g", "C:/Users/Kyle/Documents/code/BogglinBeavers/BogglinBeavers/BoggleMenu.cpp"
+                "-g", "C:/Users/Kyle/Documents/code/BogglinBeavers/BogglinBeavers/BoggleMenu.cpp", "-o", "BogglinBeavers"
             ],
             "group": {
                 "kind": "build", 
